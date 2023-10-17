@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>web app</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='welcome.css') }}">
+    <!-- <style>
+        
+    </style> -->
 </head>
 <body>
-    <h1>Hi! </h1>
-    <p>Great to see you!</p>
-    <form action="/submit" method="post">
-        <label for="namefield">Name:</label>
-        <input type="text" id="namefield" name="name">
-        <label for="agefield">Age:</label>
-        <input type="number" id="agefield" name="age">
-        <input type="submit" value="Submit">
-        </form>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Info</div>
+            <div class="form-wrapper">
+                <form action="/submit" method="post">
+                    <label for="namefield">Name:</label>
+                    <input type="text" id="namefield" name="name" placeholder="name" class="input-item">
+                    <label for="agefield">Age:</label>
+                    <input type="number" id="agefield" name="age" placeholder="a number" class="input-item">
+                    <input type="submit" class="btn" value="Submit">
+                    
+                </form>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>
+
