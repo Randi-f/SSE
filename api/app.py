@@ -10,4 +10,9 @@ def hello_world():
 def submit():
     input_name = request.form.get("name")
     input_age = request.form.get("age")
-    return render_template("hello.html", name=input_name, age=input_age)
+    if(input_age<'18'):
+        return render_template("hello.html", name=input_name, age=input_age)
+    else:
+        return render_template("helloAdult.html", name=input_name, age=input_age)
+    
+    
