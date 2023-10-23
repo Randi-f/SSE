@@ -21,7 +21,7 @@ jobs:
       - name: Install pytest
         run: pip install pytest
       - name: Run Unit Tests
-        run: pytest api/
+        run: pytest api/*.py
 
   deploy-to-vercel:
     needs: run-unit-tests
