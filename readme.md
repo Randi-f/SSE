@@ -16,7 +16,10 @@ pandoc test.txt -o test.pdf
 
  coursework 2
 
+
+
 | Student name   | Doc Name | GitHub usernames |
+| ------------- | ------------- |------------- |
 | Shihan Fu      | sf23     | Ranfi-f          |
 | Zhuofan Huang  | zh3423   | zh3423           |
 
