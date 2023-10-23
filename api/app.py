@@ -26,6 +26,8 @@ def process_query(query):
         return "Unknown"
 
 
-@app.route("http://yourapp.yourdomain.com/query?q=dinosaurs", methods=["GET"])
-def process_query2():
-    return
+@app.route('/query', methods=['GET'])
+def query_handler():
+    query_param = request.args.get('q', '')
+    result = process_query(query_param)
+    return result

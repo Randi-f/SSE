@@ -14,8 +14,17 @@ jobs:
         run: pip install flake8
       - name: Run flake8
         run: flake8 --ignore=E501 api/
-  deploy-to-vercel:
+  run-unit-tests:
     needs: python-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install pytest
+        run: pip install pytest
+      - name: Run Unit Tests
+        run: pytest api/
+
+  deploy-to-vercel:
+    needs: run-unit-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
