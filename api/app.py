@@ -28,4 +28,4 @@ def process_query(query):
 
 @app.route("http://yourapp.yourdomain.com/query?q=dinosaurs", methods=["GET"])
 def process_query2():
-    return 
+    return
