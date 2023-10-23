@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__, static_url_path="/SSE-LAB2_static", static_folder="./static")
 
+
 @app.route("/")
 def hello_world():
     return render_template("index.html")
