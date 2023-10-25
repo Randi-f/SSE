@@ -30,8 +30,7 @@ def process_query(query):
 def query_handler():
     query_param = request.args.get('q', '')
     result = process_query(query_param)
-    msg = '''<html><body>''' + result +
-    '''
+    msg = '''<html><body>''' + result + '''
     Let me show you one in 3 seconds!
     <script>
         setTimeout(function(){
