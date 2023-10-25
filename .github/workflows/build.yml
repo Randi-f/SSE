@@ -1,6 +1,17 @@
 name: Build
 on: [push]
 jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: update pip
+        run: python -m pip install --upgrade pip
   python-formatting:
     runs-on: ubuntu-latest
     steps:
@@ -14,8 +25,22 @@ jobs:
         run: pip install flake8
       - name: Run flake8
         run: flake8 --ignore=E501 api/
-  run-unit-tests:
+  safety-check:
     needs: python-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install safety
+        run: pip install safety
+      - name: Security Scanning
+        run: safety check
+  run-unit-tests:
+    needs: safety-check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
