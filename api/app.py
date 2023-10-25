@@ -30,4 +30,15 @@ def process_query(query):
 def query_handler():
     query_param = request.args.get('q', '')
     result = process_query(query_param)
-    return result
+    msg = '''<html><body>''' + result +
+    '''
+    Let me show you one in 3 seconds!
+    <script>
+        setTimeout(function(){
+        window.location.href = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dkfindout.com%2Fus%2Fdinosaurs-and-prehistoric-life%2Fdinosaurs%2Fwhat-is-dinosaur%2F&psig=AOvVaw0YwZbs91uCBimJC1hiKE3c&ust=1698345280911000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCKipmqvrkYIDFQAAAAAdAAAAABAE';
+        }, 3000); // 3000ms（3s）
+    </script>
+    </body>
+    </html>
+    '''
+    return msg
