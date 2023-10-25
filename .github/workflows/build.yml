@@ -22,7 +22,7 @@ jobs:
           python-version: 3.9
       - name: check flask is required
         run: |
-          if grep -q flask requirements.txt; then
+          if grep -q Flask requirements.txt; then
             echo "Package found in requirements.txt"
           else
             echo "Package not found in requirements.txt"
