@@ -42,6 +42,8 @@ def query_handler():
     </body>
     </html>
     '''
+    if result == "Aoligei":
+        return result
     if result == "Unknown":
         return result + " . Please try this link: https://sse-sf.vercel.app/query?q=dinosaurs"
     return msg
