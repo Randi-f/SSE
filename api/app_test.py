@@ -16,4 +16,8 @@ def test_does_not_know_about_name():
 
 
 def test_plus():
-    assert process_query("What is 27 plus 75?") == 102
+    assert process_query("What is 27 plus 75?") == "102"
+
+
+def test_max():
+    assert process_query("Which of the following numbers is the largest: 98, 59, 31?") == "98"

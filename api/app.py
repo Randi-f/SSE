@@ -20,10 +20,16 @@ def submit():
 
 
 def process_query(query):
+    if "largest" in query:
+        # Which of the following numbers is the largest: 66, 72, 44?
+        query = query.replace("?", "")
+        query = query.replace(",", "")
+        factors = query.split(" ")
+        return str(max(int(factors[8]), int(factors[9]), int(factors[10])))
     if "plus" in query:
         query = query.replace("?", "")
         factors = query.split(" ")
-        return (int)(factors[2]) + (int)(factors[4])
+        return str((int)(factors[2]) + (int)(factors[4]))
     if query == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
     if query == "What is your name?":
@@ -39,9 +45,7 @@ def query_handler():
     query_param = request.args.get("q", "")
     result = process_query(query_param)
     msg = (
-        """<html><body>"""
-        + result
-        + """
+        """<html><body>""" + result + """
     Let me show you one in 3 seconds!
     <script>
         setTimeout(function(){
@@ -58,8 +62,7 @@ def query_handler():
         return result
     if result == "Unknown":
         return (
-            result
-            + " . Please try this link: https://sse-sf.vercel.app/query?q=dinosaurs"
+            result + " . Please try this link: https://sse-sf.vercel.app/query?q=dinosaurs"
         )
 
     return result
