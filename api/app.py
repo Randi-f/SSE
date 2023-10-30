@@ -1,4 +1,7 @@
+from curses.ascii import isdigit, isxdigit
+from math import isqrt
 from flask import Flask, render_template, request
+
 
 app = Flask(__name__, static_url_path="/SSE-LAB2_static", static_folder="./static")
 
@@ -19,23 +22,45 @@ def submit():
         return render_template("helloAdult.html", name=input_name, age=input_age)
 
 
+
+def is_perfect_cube(number) -> bool:
+    """
+    Indicates (with True/False) if the provided number is a perfect cube.
+    """
+    number = abs(number)  # Prevents errors due to negative numbers
+    return round(number ** (1 / 3)) ** 3 == number
+
+
+def is_integer(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 def process_query(query):
+    query = query.replace("?", "")
+    query = query.replace(",", "")
+    factors = query.split(" ")
+    #Which of the following numbers is both a square and a cube: 2809, 4510, 3045, 729, 1355, 4096, 1372?
+    if "both a square and a cube" in query:
+        for factor in factors:
+            if factor.isdigit():
+                if isqrt(int(factor)) and is_perfect_cube(int(factor)):
+                    return factor
+        return -1
+    # What is 54 multiplied by 9?
+    if "multiplied" in query:
+        return str(int(factors[2])* int(factors[5]))
     if "largest" in query:
         # Which of the following numbers is the largest: 66, 72, 44?
-        query = query.replace("?", "")
-        query = query.replace(",", "")
-        factors = query.split(" ")
         return str(max(int(factors[8]), int(factors[9]), int(factors[10])))
     if "plus" in query:
-        query = query.replace("?", "")
-        factors = query.split(" ")
         return str((int)(factors[2]) + (int)(factors[4]))
     if query == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
-    if query == "What is your name?":
+    if query == "What is your name":
         return "Aoligei"
-    # What is 27 plus 75?
-    # Which of the following numbers is the largest: 7, 78, 82?
     else:
         return "Unknown"
 
