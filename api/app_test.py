@@ -1,4 +1,3 @@
-from math import isqrt
 from app import process_query
 
 
@@ -23,12 +22,10 @@ def test_plus():
 def test_max():
     assert process_query("Which of the following numbers is the largest: 98, 59, 31?") == "98"
 
+
 def test_multiplied():
     assert process_query("What is 5 multiplied by 9?") == "45"
 
+
 def test_square_cube():
     assert process_query("Which of the following numbers is both a square and a cube: 8, 4, 64") == "64"
-
-
-def test_square():
-    assert isqrt(8) == False

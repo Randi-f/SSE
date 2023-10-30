@@ -1,5 +1,4 @@
-from curses.ascii import isdigit, isxdigit
-from math import isqrt
+import math
 from flask import Flask, render_template, request
 
 
@@ -22,6 +21,12 @@ def submit():
         return render_template("helloAdult.html", name=input_name, age=input_age)
 
 
+def is_square(num):
+    if num < 0:
+        return False
+    square_root = math.isqrt(num)  # 使用math.isqrt()函数获取整数的平方根
+    return square_root * square_root == num
+
 
 def is_perfect_cube(number) -> bool:
     """
@@ -38,20 +43,21 @@ def is_integer(s):
     except ValueError:
         return False
 
+
 def process_query(query):
     query = query.replace("?", "")
     query = query.replace(",", "")
     factors = query.split(" ")
-    #Which of the following numbers is both a square and a cube: 2809, 4510, 3045, 729, 1355, 4096, 1372?
+    # Which of the following numbers is both a square and a cube: 2809, 4510, 3045, 729, 1355, 4096, 1372?
     if "both a square and a cube" in query:
         for factor in factors:
             if factor.isdigit():
-                if isqrt(int(factor)) and is_perfect_cube(int(factor)):
+                if is_square(int(factor)) and is_perfect_cube(int(factor)):
                     return factor
         return -1
     # What is 54 multiplied by 9?
     if "multiplied" in query:
-        return str(int(factors[2])* int(factors[5]))
+        return str(int(factors[2]) * int(factors[5]))
     if "largest" in query:
         # Which of the following numbers is the largest: 66, 72, 44?
         return str(max(int(factors[8]), int(factors[9]), int(factors[10])))

@@ -13,6 +13,7 @@ pandoc test.txt -o test.pdf
  pytest api/*.py
  black api/app.py
  flake8 api/*.py
+ flake8 --ignore=E501 api/
 
  coursework 2
 
@@ -63,9 +64,10 @@ https://github.com/Randi-f/SSE/actions
  
 7.Did writing tests help?
   Yes. It helps a lot since after passing the test, the result of the functions is guaranteed.
+  It also reduces the developing time of deploying on local computers. In this case, we can use test functions to check whether the design goal is implemented without running "flask run" command and go to the url links.
   
 8.Did you delete any code?
-  Mostly, no. Because each time, we add extra features instead of reducing some.
+  Yes. As more functions are added, many codes can be combined to reduce the redundancy of codes.
   
 9.How did you co-operate within your team?
   With face-to-face communication, we agreed on how to achieve each goal. Then with the help of github, we implement the new functions and deploy it and then release it.
