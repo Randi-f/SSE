@@ -87,7 +87,7 @@ def query_handler():
     </html>
     """
     )
-    if result == "dinasours":
+    if result == "Dinosaurs ruled the Earth 200 million years ago":
         return msg
     if result == "Aoligei":
         return result
