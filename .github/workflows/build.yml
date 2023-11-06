@@ -59,6 +59,8 @@ jobs:
           python-version: 3.9
       - name: Install flask
         run: pip install flask
+      - name: Install requests
+        run: pip install requests
       - name: Install pytest
         run: pip install pytest
       - name: Run Unit Tests
