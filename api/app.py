@@ -1,6 +1,6 @@
 import math
 from flask import Flask, render_template, request
-
+import requests
 
 app = Flask(__name__, static_url_path="/SSE-LAB2_static", static_folder="./static")
 
@@ -10,6 +10,28 @@ def hello_world():
     return render_template("index.html")
     # return "Hello , my new app!"
 
+@app.route("/exploregit")
+def exploregit():
+    return render_template("exploreGit.html")
+    # return "Hello , my new app!"
+
+@app.route("/exploregitsubmit", methods=["POST"])
+def exploregitsubmit():
+    githubusername = request.form.get("githubUsername")
+
+    return "Hello," + githubusername + getRepoInfo()
+
+@app.route("/getrepo")
+def getRepoInfo():
+    response = requests.get("https://api.github.com/users/randi-f/repos")
+    if response.status_code == 200:
+        repos = response.json() #list
+        print(type(repos))
+        for repo in repos:
+            print(repo["full_name"])
+    # print(type(repos["full_name"]))
+    return render_template('table.html', items=[repo['full_name'] for repo in repos])
+    # return str(repos)
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -97,3 +119,6 @@ def query_handler():
         )
 
     return result
+
+if __name__ =='__main__':
+    app.debug=True
