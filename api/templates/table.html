@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table from List Parameter</title>
+    <title>Git repo</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='welcome.css') }}">
+    <title>Table from Git repo</title>
 </head>
-
 <body>
-    <table border="1" id="myTable">
-        <tr>
-            <th>full_name</th>
-            <th>Age</th>
-            <th>Country</th>
-        </tr>
-    </table>
+    <div class="container">
+        <div class="info-wrapper">
+            <div class="header">Info</div>
+            <div class="form-wrapper">
+                <div class="table-container">
+                <table border="1">
+                    <tr>
+                        <th>repo names</th>
+                        <th>updated time</th>
+                        <th>commit hash</th>
+                        <th>author</th>
+                        <th>date</th>
+                        <th>commit message</th>
+                        <th>other</th>
+                    </tr>
+                    {% for i in range(items|length) %}
+                    <tr>
+                        <td>{{ items[i] }}</td>
+                        <td>{{ updated_times[i] }}</td>
+                        <td>{{ hashes[i] }}</td>
+                        <td>{{ authors[i] }}</td>
+                        <td>{{ dates[i] }}</td>
+                        <td>{{ commit_messages[i] }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+            </div>
+                    
+            </div>
 
-    <table border="1">
-        <tr>
-            <th>Items</th>
-        </tr>
-        {% for item in items %}
-        <tr>
-            <td>{{ item }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        </div>
+    </div>
+    
 </body>
-<!-- <script>
-    // 定义包含不同对象的列表
-    var myList = "{{items}}";
-
-    // 获取表格元素
-    var table = document.getElementById("myTable");
-
-    // 遍历列表中的对象，将它们的属性显示在表格中
-    for (var i = 0; i < myList.length; i++) {
-        var row = table.insertRow(i + 1); // 插入新行，"+1" 是为了跳过表头行
-        var cell1 = row.insertCell(0); // 插入第一个单元格（列）
-        var cell2 = row.insertCell(1); // 插入第二个单元格（列）
-        var cell3 = row.insertCell(2); // 插入第三个单元格（列）
-
-        // 将对象的属性赋值给单元格
-        cell1.textContent = myList[i].full_name;
-        // cell2.textContent = "null";
-        // cell3.textContent = "null";
-    }
-</script> -->
 </html>

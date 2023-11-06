@@ -10,28 +10,87 @@ def hello_world():
     return render_template("index.html")
     # return "Hello , my new app!"
 
+
 @app.route("/exploregit")
 def exploregit():
     return render_template("exploreGit.html")
     # return "Hello , my new app!"
 
+
 @app.route("/exploregitsubmit", methods=["POST"])
 def exploregitsubmit():
     githubusername = request.form.get("githubUsername")
+    url = "https://api.github.com/users/" + githubusername + "/repos"
+    response = send_request_git(url)
+    hashes = []
+    authors = []
+    dates = []
+    commit_messages = []
+    # repos=[]
+    if response.status_code == 200:
+        repos = response.json()  # list
+        for repo in repos:
+            commit_url = (
+                "https://api.github.com/repos/"
+                + githubusername
+                + "/"
+                + repo["name"]
+                + "/commits"
+            )
+            # print(repo["updated_time"])
+            commit_response = send_request_git(commit_url)
+            if commit_response.status_code == 200:
+                commits = commit_response.json()
+                # print(commits[0]["author"])
+                hashes.append(commits[0]["sha"])
+                authors.append(commits[0]["commit"]["author"]["name"])
+                dates.append(commits[0]["commit"]["author"]["date"])
+                commit_messages.append(commits[0]["commit"]["message"])
+        return render_template(
+            "table.html",
+            hashes=hashes,
+            authors=authors,
+            dates=dates,
+            commit_messages=commit_messages,
+            items=[repo["full_name"] for repo in repos],
+            updated_times=[repo["updated_at"] for repo in repos],
+        )
 
-    return "Hello," + githubusername + getRepoInfo()
+    else:
+        # Handle the case where the request was not successful
+        print(
+            f"Failed to retrieve repositories for {githubusername}."
+            + f"Status code: {response.status_code}"
+        )
+        return "false"
+
+    # return "Hello," + githubusername + getRepoInfo()
+
+
+def send_request_git(url):
+    access_token = "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"  # 替换为您的GitHub个人访问令牌
+    headers = {"Authorization": "token " + access_token}
+    response = requests.get(url, headers=headers)
+    return response
+
 
 @app.route("/getrepo")
 def getRepoInfo():
-    response = requests.get("https://api.github.com/users/randi-f/repos")
+    access_token = "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"  # 替换为您的GitHub个人访问令牌
+    headers = {"Authorization": "token " + access_token}
+    response = requests.get(
+        "https://api.github.com/users/randi-f/repos", headers=headers
+    )
+    # url = "https://api.github.com/users/"+githubusername+"/repos"
+    # response = requests.get("https://api.github.com/repos/randi-f/-/commits")
     if response.status_code == 200:
-        repos = response.json() #list
-        print(type(repos))
-        for repo in repos:
-            print(repo["full_name"])
-    # print(type(repos["full_name"]))
-    return render_template('table.html', items=[repo['full_name'] for repo in repos])
-    # return str(repos)
+        repos = response.json()  # list
+        # print(type(repos))
+        # for repo in repos:
+        #     print(repo["full_name"])
+    # return render_template('table.html', items=[repo['full_name'] for repo in repos])
+    return str(repos)
+
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -98,7 +157,9 @@ def query_handler():
     query_param = request.args.get("q", "")
     result = process_query(query_param)
     msg = (
-        """<html><body>""" + result + """
+        """<html><body>"""
+        + result
+        + """
     Let me show you one in 3 seconds!
     <script>
         setTimeout(function(){
@@ -115,10 +176,12 @@ def query_handler():
         return result
     if result == "Unknown":
         return (
-            result + " . Please try this link: https://sse-sf.vercel.app/query?q=dinosaurs"
+            result
+            + " . Please try this link: https://sse-sf.vercel.app/query?q=dinosaurs"
         )
 
     return result
 
-if __name__ =='__main__':
-    app.debug=True
+
+if __name__ == "__main__":
+    app.debug = True

@@ -23,6 +23,17 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.info-wrapper {
+    background-color: #fff;
+    width: 900px;
+    height: 700px;
+    border-radius: 15px;
+    padding: 0 50px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 .header {
     font-size: 38px;
     font-weight: bold;
@@ -58,4 +69,23 @@ a {
     text-decoration-line: none;
     color: #abc1ee;
 }
+
+.table-container {
+    max-height: 500px; /* 设置表格容器的最大高度 */
+    max-width: 900px; /* 设置表格容器的最大宽度 */
+    overflow-x: auto; /* 设置X轴方向上出现滚动条 */
+    overflow-y: auto; /* 设置Y轴方向上出现滚动条 */
+}
+
+table {
+    width: 100%; /* 表格宽度占据父容器的100% */
+    border-collapse: collapse; /* 合并表格边框 */
+}
+
+th, td {
+    border: 1px solid #ccc; /* 设置单元格边框样式 */
+    padding: 10px; /* 设置单元格内边距 */
+    text-align: left; /* 设置文本左对齐 */
+}
+
 /* author : https://blog.csdn.net/bhegi_seg/article/details/123394504 */
