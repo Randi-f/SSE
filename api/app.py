@@ -76,7 +76,8 @@ def send_request_git(url):
 
 @app.route("/getrepo")
 def getRepoInfo():
-    access_token = "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"  # 替换为您的GitHub个人访问令牌
+    # access_token = "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"  # 替换为您的GitHub个人访问令牌
+    access_token = "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"
     headers = {"Authorization": "token " + access_token}
     response = requests.get(
         "https://api.github.com/users/randi-f/repos", headers=headers
