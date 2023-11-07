@@ -72,7 +72,7 @@ def send_request_git(url):
     # 1. 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
     # 2. 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
     access_token = "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"  # 替换为您的GitHub个人访问令牌
-    headers = {"Authorization": "token " + access_token,"Accept": "application/vnd.github+json"}
+    headers = {"Authorization": "token " + access_token, "Accept": "application/vnd.github+json"}
     response = requests.get(url, headers=headers)
     return response
 
