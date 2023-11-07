@@ -1,3 +1,9 @@
+<!--
+ * @Author: shihan
+ * @Date: 2023-11-06 15:40:33
+ * @version: 1.0
+ * @description: 
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +16,22 @@
 <body>
     <div class="container">
         <div class="info-wrapper">
-            <div class="header">Info</div>
+            <h2>Git   Repo   Info</h2>
             <div class="form-wrapper">
+
+                <div class="light" onclick="generatecv()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    Generate your own CV!
+                </div>            
+                <script>
+                    function generatecv() {
+                        // 在这个函数内部，你可以编写跳转到其他页面的逻辑
+                        window.location.href = '/generatecv'; // 将链接替换为你想要跳转的页面地址
+                    }
+                </script>
                 <div class="table-container">
                 <table border="1">
                     <tr>

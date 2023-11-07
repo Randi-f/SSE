@@ -1,8 +1,9 @@
 import math
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import requests
 
 app = Flask(__name__, static_url_path="/SSE-LAB2_static", static_folder="./static")
+app.secret_key = "12345678"
 
 
 @app.route("/")
@@ -20,8 +21,10 @@ def exploregit():
 @app.route("/exploregitsubmit", methods=["POST"])
 def exploregitsubmit():
     githubusername = request.form.get("githubUsername")
+    session["github_username"] = githubusername
     url = "https://api.github.com/users/" + githubusername + "/repos"
-    response = send_request_git(url)
+    response = send_request_git(url, githubusername)
+    print(session)
     hashes = []
     authors = []
     dates = []
@@ -38,7 +41,7 @@ def exploregitsubmit():
                 + "/commits"
             )
             # print(repo["updated_time"])
-            commit_response = send_request_git(commit_url)
+            commit_response = send_request_git(commit_url, githubusername)
             if commit_response.status_code == 200:
                 commits = commit_response.json()
                 # print(commits[0]["author"])
@@ -67,14 +70,40 @@ def exploregitsubmit():
     # return "Hello," + githubusername + getRepoInfo()
 
 
-def send_request_git(url):
-    # 3. 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
-    # 1. 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
-    # 2. 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
-    access_token = "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"  # 替换为您的GitHub个人访问令牌
-    headers = {"Authorization": "token " + access_token, "Accept": "application/vnd.github+json"}
-    response = requests.get(url, headers=headers)
+def send_request_git(url, github_user_name):
+    # if github_user_name == "randi-f":
+    if github_user_name == " ":  # for vercel version, cannot explode access_token
+        # 3. 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
+        # 1. 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
+        # 2. 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
+        access_token = "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"  # 替换为您的GitHub个人访问令牌
+        headers = {
+            "Authorization": "token " + access_token,
+            "Accept": "application/vnd.github+json",
+        }
+        response = requests.get(url, headers=headers)
+    else:
+        response = requests.get(url)
     return response
+
+
+@app.route("/generatecv")
+# def generate_cv():
+#     url = "https://api.github.com/users/randi-f"
+#     response=send_request_git(url, "")
+#     data=response.json()
+#     return render_template("cv.html", response=data)
+def generate_cv():
+    print(session)
+    github_username = session.get("github_username")  # 尝试从会话中获取 github_username
+    if github_username is not None:
+        url = "https://api.github.com/users/" + github_username
+        response = send_request_git(url, github_username)
+        data = response.json()
+        return render_template("cv.html", response=data)
+        # return f'Welcome back, User {github_username}!'
+    else:
+        return "Cannot find your github_username, please go back to /exploregit page!"
 
 
 @app.route("/getrepo")
