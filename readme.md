@@ -1,3 +1,9 @@
+<!--
+ * @Author: shihan
+ * @Date: 2023-10-30 19:43:09
+ * @version: 1.0
+ * @description: 
+-->
 source .venv/bin/activate
 flask run
 pandoc test.txt -o test.pdf
@@ -73,3 +79,20 @@ https://github.com/Randi-f/SSE/actions
   
 9.How did you co-operate within your team?
   With face-to-face communication, we agreed on how to achieve each goal. Then with the help of github, we implement the new functions and deploy it and then release it.
+
+
+coursework 5 
+| Student name   | Doc Name | GitHub usernames |
+| ------------- | ------------- |------------- |
+| Shihan Fu      | sf23     | Ranfi-f          |
+| Zhuofan Huang  | zh3423   | zh3423           |
+| Xiaotian Zhang  | xz6917   | XiaotianZhangGitHub          |
+
+• A link to the new page showing the new functionality in your deployed web app running on Vercel
+https://sse-sf.vercel.app/exploregit
+
+• If you did an extension for Part 6, a short description of what your new feature does.
+1. implement the security of communicating with GitHub api
+    We add a security list. If the user is one of "protected" user, then the server will send request to the api with a header which contains authentication information. In this way, we can guarantee the security of communicating.
+2. using response from https://api.github.com/users/{USER_NAME} to generate cv
+    After collectint username from the home page, we used "session" to store the information of username for further usage. The user can click the "Generate your own CV!" area to redirect to a new page. On this page, information gained from the other api "https://api.github.com/users/{USER_NAME}" would be shown on the screen in tables. In addition, we used the link and the html label "img" to show a profile photo.
