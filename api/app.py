@@ -1,5 +1,5 @@
 import math
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 import requests
 
 app = Flask(__name__, static_url_path="/SSE-LAB2_static", static_folder="./static")
@@ -215,6 +215,7 @@ def query_handler():
 
     return result
 
+
 books = [
     {
         "id": 1,
@@ -289,8 +290,8 @@ def search():
     return render_template("page.html", data=new_list)
 
 
-@app.route("/query", methods=["GET"])
-def query_handler():
+@app.route("/query2", methods=["GET"])
+def query_handler2():
     id = request.args.get("id", "")
     title = request.args.get("title", "")
     author = request.args.get("author", "")
