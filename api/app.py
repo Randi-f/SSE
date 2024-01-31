@@ -215,6 +215,111 @@ def query_handler():
 
     return result
 
+books = [
+    {
+        "id": 1,
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee",
+        "publication_year": 1960,
+        "genre": "Southern Gothic",
+    },
+    {
+        "id": 2,
+        "title": "1984",
+        "author": "George Orwell",
+        "publication_year": 1949,
+        "genre": "Dystopian Fiction",
+    },
+    {
+        "id": 3,
+        "title": "Pride and Prejudice",
+        "author": "Jane Austen",
+        "publication_year": 1813,
+        "genre": "Romantic Novel",
+    },
+    {
+        "id": 4,
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "publication_year": 1925,
+        "genre": "American Literature",
+    },
+    {
+        "id": 5,
+        "title": "The Hunger Games",
+        "author": "Suzanne Collins",
+        "publication_year": 2008,
+        "genre": "Young Adult Dystopian",
+    },
+]
+
+
+@app.route("/page")
+def page():
+    return render_template("page.html", data=books)
+
+
+@app.route("/search", methods=["POST"])
+def search():
+    id = request.form.get("id")
+    title = request.form.get("title")
+    author = request.form.get("author")
+    pub = request.form.get("pub")
+    genre = request.form.get("genre")
+
+    ret = []
+    for book in books:
+        if (
+            (id != "" and book["id"] == int(id))
+            or (title != "" and book["title"] == title)
+            or (author != "" and book["author"] == author)
+            or (pub != "" and book["publication_year"] == int(pub))
+            or (genre != "" and book["genre"] == genre)
+        ):
+            ret.append(book)
+
+    # reduce redundancy
+    seen_ids = set()
+    new_list = []
+    for d in ret:
+        if d["id"] not in seen_ids:
+            new_list.append(d)
+            seen_ids.add(d["id"])
+
+    return render_template("page.html", data=new_list)
+
+
+@app.route("/query", methods=["GET"])
+def query_handler():
+    id = request.args.get("id", "")
+    title = request.args.get("title", "")
+    author = request.args.get("author", "")
+    publication_year = request.args.get("publication_year", "")
+    genre = request.args.get("genre", "")
+    ret = []
+    for book in books:
+        if (
+            (id != "" and book["id"] == int(id))
+            or (title != "" and book["title"] == title)
+            or (author != "" and book["author"] == author)
+            or (
+                publication_year != ""
+                and book["publication_year"] == int(publication_year)
+            )
+            or (genre != "" and book["genre"] == genre)
+        ):
+            ret.append(book)
+
+    # reduce redundancy
+    seen_ids = set()
+    new_list = []
+    for d in ret:
+        if d["id"] not in seen_ids:
+            new_list.append(d)
+            seen_ids.add(d["id"])
+
+    return jsonify(new_list)
+
 
 if __name__ == "__main__":
     app.debug = True
